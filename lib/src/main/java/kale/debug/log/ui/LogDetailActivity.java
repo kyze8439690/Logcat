@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ public class LogDetailActivity extends AppCompatActivity {
                 .putExtra(KEY_MESSAGE, str);
     }
 
+    private TextView mDetailTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +40,32 @@ public class LogDetailActivity extends AppCompatActivity {
         if (intent == null) {
             return;
         }
-        final TextView detailTv = (TextView) findViewById(R.id.log_detail_tv);
+        mDetailTextView = (TextView) findViewById(R.id.log_detail_tv);
         LogBean log = (LogBean) intent.getSerializableExtra(KEY_MESSAGE);
-        assert detailTv != null;
-        detailTv.append("Time：" + "\n" + log.time + "\n\n");
-        detailTv.append("Lev：" + "\n" + log.lev + "\n\n");
-        detailTv.append("Tag：" + "\n" + log.tag + "\n\n");
-        detailTv.append("Message：" + "\n" + log.msg);
+        assert mDetailTextView != null;
+        mDetailTextView.append("Time：" + "\n" + log.time + "\n\n");
+        mDetailTextView.append("Lev：" + "\n" + log.lev + "\n\n");
+        mDetailTextView.append("Tag：" + "\n" + log.tag + "\n\n");
+        mDetailTextView.append("Message：" + "\n" + log.msg);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.kale_log_detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int i = item.getItemId();
-        if (i == android.R.id.home) {
+        if (i == R.id.action_share) {
+            String content = mDetailTextView.getText().toString();
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+            startActivity(intent);
+            return true;
+        } else if (i == android.R.id.home) {
             onBackPressed();
             return true;
         } else {
