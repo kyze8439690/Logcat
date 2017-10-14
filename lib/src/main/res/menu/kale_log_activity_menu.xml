@@ -5,13 +5,11 @@
     <item
         android:id="@+id/action_share"
         android:title="Share Log"
-        android:showAsAction="never"
-        />
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/action_clear"
         android:title="Clear Log"
-        android:showAsAction="never"
-        />
+        app:showAsAction="never"/>
 
 </menu>

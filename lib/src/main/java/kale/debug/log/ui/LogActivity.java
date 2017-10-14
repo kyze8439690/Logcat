@@ -42,6 +42,10 @@ public class LogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kale_log_activity);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         mViewPager = (ViewPager) findViewById(R.id.log_vp);
         PagerTitleStrip mainPts = (PagerTitleStrip) findViewById(R.id.main_pts);
         mainPts.setTextColor(getResources().getColor(android.R.color.white));
@@ -96,16 +100,17 @@ public class LogActivity extends AppCompatActivity {
                         }
                     }).create().show();
             return true;
-        } else {
-            if (i == R.id.action_clear) {
-                LogCatCmd.getInstance().clear().commit();
-                for (LogListFragment fragment : mFragments) {
-                    fragment.clearData();
-                }
-                return true;
-            } else {
-                return super.onOptionsItemSelected(item);
+        } else if (i == R.id.action_clear) {
+            LogCatCmd.getInstance().clear().commit();
+            for (LogListFragment fragment : mFragments) {
+                fragment.clearData();
             }
+            return true;
+        } else if (i == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

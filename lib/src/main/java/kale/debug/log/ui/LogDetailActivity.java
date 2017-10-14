@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import kale.debug.log.R;
@@ -27,6 +28,11 @@ public class LogDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.kale_log_detail_activity);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Intent intent = getIntent();
         if (intent == null) {
             return;
@@ -38,5 +44,16 @@ public class LogDetailActivity extends AppCompatActivity {
         detailTv.append("Lev：" + "\n" + log.lev + "\n\n");
         detailTv.append("Tag：" + "\n" + log.tag + "\n\n");
         detailTv.append("Message：" + "\n" + log.msg);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int i = item.getItemId();
+        if (i == android.R.id.home) {
+            onBackPressed();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }

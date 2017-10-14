@@ -9,11 +9,13 @@
 
     <application android:allowBackup="true">
         <activity
+            android:label="LogcatViewer"
             android:name=".ui.LogActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             />
         <activity
+            android:label="LogcatDetail"
             android:name=".ui.LogDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
